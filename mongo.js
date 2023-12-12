@@ -23,7 +23,7 @@ const games = [
 	{gameName: 'Fortnite'},
 	{gameName: 'Valorant'},
 	{gameName: 'Minecraft'}
-]
+];
 
 Game.insertMany(games)
 	.then((res) => {
@@ -38,6 +38,22 @@ const clientSchema = new Schema({
 	email: String,
 	password: String
 });
+
+/* 
+// Middleware para cifrar contraseñas antes de guardar
+clientSchema.pre('save', async function (next) {
+  if (this.isModified('password') || this.isNew) {
+    try {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
+      this.password = hashedPassword;
+      next();
+    } catch (err) {
+      return next(err);
+    }
+  } else {
+    return next();
+  }
+}); */
 
 //Creation of model for the clients
 const Client = model('Client', clientSchema);
